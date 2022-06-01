@@ -9,5 +9,4 @@ public class JavaDay22SpringbootPayrollApplication {
     public static void main(String[] args) {
         SpringApplication.run(JavaDay22SpringbootPayrollApplication.class, args);
     }
-
 }
