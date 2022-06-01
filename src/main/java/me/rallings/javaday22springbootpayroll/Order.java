@@ -9,39 +9,40 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMER_ORDER")
-public class Order {
-
-    private @Id @GeneratedValue Long id;
+class Order {
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String description;
     private Status status;
 
-    public Order() {}
+    Order() {
+    }
 
-    public Order(String description, Status status) {
-
+    Order(String description, Status status) {
         this.description = description;
         this.status = status;
     }
 
     public Long getId() {
-        return this.id;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Status getStatus() {
-        return this.status;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {
@@ -49,24 +50,26 @@ public class Order {
     }
 
     @Override
-    public boolean equals(Object o) {
-
-        if (this == o)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if (!(o instanceof Order))
+        if (!(obj instanceof Order))
             return false;
-        Order order = (Order) o;
-        return Objects.equals(this.id, order.id) && Objects.equals(this.description, order.description)
-                && this.status == order.status;
+
+        Order other = (Order) obj;
+        return Objects.equals(id, other.id)
+                && Objects.equals(description, other.description)
+                && status == other.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.description, this.status);
+        return Objects.hash(id, description, status);
     }
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + this.id + ", description='" + this.description + '\'' + ", status=" + this.status + '}';
+        return "Order{id=%d, description='%s', status=%s}"
+                .formatted(id, description, status);
     }
 }

@@ -8,58 +8,59 @@ import javax.persistence.Id;
 
 @Entity
 class Employee {
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    private @Id @GeneratedValue Long id;
     private String firstName;
     private String lastName;
     private String role;
 
-    public Employee() {}
+    Employee() {
+    }
 
-    public Employee(String firstName, String lastName, String role) {
-
+    Employee(String firstName, String lastName, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
     }
 
-    public String getName() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    public void setName(String name) {
-
-        String[] parts = name.split(" ");
-        this.firstName = parts[0];
-        this.lastName = parts[1];
-    }
-
     public Long getId() {
-        return this.id;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public String getRole() {
-        return this.role;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+
+    public void setName(String name) {
+        String[] parts = name.split(" ");
+        firstName = parts[0];
+        lastName = parts[1];
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public void setRole(String role) {
@@ -67,25 +68,27 @@ class Employee {
     }
 
     @Override
-    public boolean equals(Object o) {
-
-        if (this == o)
-            return true;
-        if (!(o instanceof Employee))
-            return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
-                && Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.role, employee.role);
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, role);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.firstName, this.lastName, this.role);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Employee))
+            return false;
+
+        Employee other = (Employee) obj;
+        return Objects.equals(id, other.id)
+                && Objects.equals(firstName, other.firstName)
+                && Objects.equals(lastName, other.lastName)
+                && Objects.equals(role, other.role);
     }
 
     @Override
     public String toString() {
-        return "Employee{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
-                + '\'' + ", role='" + this.role + '\'' + '}';
+        return "Employee{id=%d, firstName='%s', lastName='%s', role='%s'}"
+                .formatted(id, firstName, lastName, role);
     }
 }
